@@ -6,8 +6,12 @@
 package mygame;
 
 import com.jme3.asset.AssetManager;
+import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import com.jme3.texture.Texture;
 import com.jme3.util.SkyFactory;
@@ -37,6 +41,7 @@ public class Factory {
 
     public Spatial cargarSpaceShip() {
         Spatial spaceship = assetManager.loadModel("Models/lpSpaceShip/lpSpaceShip.j3o");
+        spaceship.setName("nave");
 
         spaceship.setLocalTranslation(0f, -9f, 0f);
         spaceship.setLocalScale(1);
@@ -46,5 +51,12 @@ public class Factory {
 
     public AmbientLight crearLuz(ColorRGBA color) {
         return new AmbientLight(color);
+    }
+
+    public Spatial crearPlano(Vector3f v) {
+        Spatial plano = assetManager.loadModel("Models/plano/plano.j3o");
+        plano.setLocalTranslation(v);
+        plano.setLocalScale(2f);
+        return plano;
     }
 }
