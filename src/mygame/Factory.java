@@ -10,9 +10,12 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.light.AmbientLight;
+import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
 import com.jme3.util.SkyFactory;
 
@@ -58,5 +61,15 @@ public class Factory {
         plano.setLocalTranslation(v);
         plano.setLocalScale(2f);
         return plano;
+    }
+
+    public Geometry crearObjeto(Vector3f v, ColorRGBA color) {
+        Box b = new Box(2, 2, 2);
+        Geometry geometry = new Geometry("Box", b);
+        geometry.setLocalTranslation(v);
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", color);  
+        geometry.setMaterial(mat);
+        return geometry;
     }
 }

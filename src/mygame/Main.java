@@ -29,10 +29,10 @@ public class Main extends SimpleApplication {
 
     private Spatial spaceship;
     private Spatial plano;
-    private Spatial tube1;
-    private Spatial tube2;
-    private Spatial tube3;
-    private Spatial tube4;
+    private Spatial terreno1;
+    private Spatial terreno2;
+    private Spatial terreno3;
+    private Spatial terreno4;
     private Geometry Gb1;
     private Box b;
     private Geometry Gb2;
@@ -87,14 +87,14 @@ public class Main extends SimpleApplication {
         agregarLuz(factory.crearLuz(ColorRGBA.White));
         crearPlayer();
         crearPlanos();
-        crearObjetos();
+        crearCubos();
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         //TODO: add update code
-        MoverTerreno(tube1, tube2, tube3, tube4);
-        MoverObstaculo(Gb1, Gb2);
+        MoverTerreno();
+        MoverObstaculo();
 
         camLeft = new Vector3f(1, 0, 0);
         camLeft.y = 0;
@@ -113,21 +113,21 @@ public class Main extends SimpleApplication {
         cam.setRotation(q);
         player.setWalkDirection(walkDirection);
 
-        if (spaceship.getLocalTranslation().z > tube2.getLocalTranslation().z) {
+        if (spaceship.getLocalTranslation().z > terreno2.getLocalTranslation().z) {
 
-            tube1.setLocalTranslation(0, -10, tube4.getLocalTranslation().getZ() + 35);
+            terreno1.setLocalTranslation(0, -10, terreno4.getLocalTranslation().getZ() + 35);
         }
 
-        if (spaceship.getLocalTranslation().z > tube3.getLocalTranslation().z) {
-            tube2.setLocalTranslation(0, -10, tube1.getLocalTranslation().getZ() + 35);
+        if (spaceship.getLocalTranslation().z > terreno3.getLocalTranslation().z) {
+            terreno2.setLocalTranslation(0, -10, terreno1.getLocalTranslation().getZ() + 35);
         }
 
-        if (spaceship.getLocalTranslation().z > tube4.getLocalTranslation().z) {
-            tube3.setLocalTranslation(0, -10, tube2.getLocalTranslation().getZ() + 35);
+        if (spaceship.getLocalTranslation().z > terreno4.getLocalTranslation().z) {
+            terreno3.setLocalTranslation(0, -10, terreno2.getLocalTranslation().getZ() + 35);
         }
 
-        if (spaceship.getLocalTranslation().z > tube1.getLocalTranslation().z) {
-            tube4.setLocalTranslation(0, -10, tube3.getLocalTranslation().getZ() + 35);
+        if (spaceship.getLocalTranslation().z > terreno1.getLocalTranslation().z) {
+            terreno4.setLocalTranslation(0, -10, terreno3.getLocalTranslation().getZ() + 35);
         }
 
         if (spaceship.getLocalTranslation().z > Gb1.getLocalTranslation().z) {
@@ -156,17 +156,16 @@ public class Main extends SimpleApplication {
         //TODO: add render code
     }
 
-    private void MoverTerreno(Spatial terreno1, Spatial terreno2, Spatial terreno3, Spatial terreno4) {
-
+    private void MoverTerreno() {
         terreno1.setLocalTranslation(terreno1.getLocalTranslation().x, terreno1.getLocalTranslation().y, terreno1.getLocalTranslation().z - 0.2f);
         terreno2.setLocalTranslation(terreno2.getLocalTranslation().x, terreno2.getLocalTranslation().y, terreno2.getLocalTranslation().z - 0.2f);
         terreno3.setLocalTranslation(terreno3.getLocalTranslation().x, terreno3.getLocalTranslation().y, terreno3.getLocalTranslation().z - 0.2f);
         terreno4.setLocalTranslation(terreno4.getLocalTranslation().x, terreno4.getLocalTranslation().y, terreno4.getLocalTranslation().z - 0.2f);
     }
 
-    private void MoverObstaculo(Geometry Geom, Geometry Geom2) {
-        Geom.setLocalTranslation(Geom.getLocalTranslation().x, Geom.getLocalTranslation().y, Geom.getLocalTranslation().z - 0.1f);
-        Geom2.setLocalTranslation(Geom2.getLocalTranslation().x, Geom2.getLocalTranslation().y, Geom2.getLocalTranslation().z - 0.1f);
+    private void MoverObstaculo() {
+        Gb1.setLocalTranslation(Gb1.getLocalTranslation().x, Gb1.getLocalTranslation().y, Gb1.getLocalTranslation().z - 0.1f);
+        Gb2.setLocalTranslation(Gb2.getLocalTranslation().x, Gb2.getLocalTranslation().y, Gb2.getLocalTranslation().z - 0.1f);
     }
 
     private void crearPlanos() {
@@ -175,47 +174,33 @@ public class Main extends SimpleApplication {
             new Vector3f(0f, -10f, 70),
             new Vector3f(0f, -10f, 105)};
 
-        tube1 = factory.crearPlano(posiciones[1]);
-        phisycs.volverRigido(tube1, 0f);
-        agregarelemento(tube1);
+        terreno1 = factory.crearPlano(posiciones[1]);
+        phisycs.volverRigido(terreno1, 0f);
+        agregarelemento(terreno1);
 
-        tube2 = factory.crearPlano(posiciones[2]);
-        phisycs.volverRigido(tube2, 0f);
-        agregarelemento(tube2);
+        terreno2 = factory.crearPlano(posiciones[2]);
+        phisycs.volverRigido(terreno2, 0f);
+        agregarelemento(terreno2);
 
-        tube3 = factory.crearPlano(posiciones[3]);
-        phisycs.volverRigido(tube3, 0f);
-        agregarelemento(tube3);
+        terreno3 = factory.crearPlano(posiciones[3]);
+        phisycs.volverRigido(terreno3, 0f);
+        agregarelemento(terreno3);
 
-        tube4 = factory.crearPlano(posiciones[4]);
-        phisycs.volverRigido(tube4, 0f);
-        agregarelemento(tube4);
+        terreno4 = factory.crearPlano(posiciones[4]);
+        phisycs.volverRigido(terreno4, 0f);
+        agregarelemento(terreno4);
     }
 
-    private void crearObjetos() {
-        b = new Box(2, 2, 2);
-        Gb1 = new Geometry("Box", b);
-        Gb1.setLocalTranslation(0, -8f, 100);
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Red);
-        Gb1.setMaterial(mat);
-        CollisionShape sceneShape1 = CollisionShapeFactory.createBoxShape(Gb1); //aca se hace colisionable
-        landScape2 = new RigidBodyControl(sceneShape1, 0f); // aca le añadimos peso
-        Gb1.addControl(landScape2);
-        bulletAppState.getPhysicsSpace().add(landScape2);
-        rootNode.attachChild(Gb1);
+    private void crearCubos() {
 
-        b2 = new Box(2, 2, 2);
-        Gb2 = new Geometry("Box", b2);
-        Gb2.setLocalTranslation(5, -8f, 100);
-        Material mat2 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat2.setColor("Color", ColorRGBA.Blue);
-        Gb2.setMaterial(mat2);
-        CollisionShape sceneShape2 = CollisionShapeFactory.createBoxShape(Gb2); //aca se hace colisionable
-        landScape3 = new RigidBodyControl(sceneShape2, 0f); // aca le añadimos peso
-        Gb2.addControl(landScape3);
-        bulletAppState.getPhysicsSpace().add(landScape3);
-        rootNode.attachChild(Gb2);
+        Gb1 = factory.crearObjeto(new Vector3f(0, -8f, 100), ColorRGBA.randomColor());
+        phisycs.volverRigido(Gb1, 0f);
+        agregarelemento(Gb1);
+
+        Gb2 = factory.crearObjeto(new Vector3f(5, -8f, 100), ColorRGBA.randomColor());
+        phisycs.volverRigido(Gb2, 0f);
+        agregarelemento(Gb2);
+
     }
 
     private void crearPlayer() {
