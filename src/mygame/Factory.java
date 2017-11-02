@@ -67,7 +67,7 @@ public class Factory {
         Geometry geometry = new Geometry("Box", b);
         geometry.setLocalTranslation(v);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", color);  
+        mat.setColor("Color", color);
         geometry.setMaterial(mat);
         return geometry;
     }
