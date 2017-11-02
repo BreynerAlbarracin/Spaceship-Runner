@@ -6,9 +6,6 @@
 package mygame;
 
 import com.jme3.asset.AssetManager;
-import com.jme3.bullet.collision.shapes.CollisionShape;
-import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.light.AmbientLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -53,7 +50,9 @@ public class Factory {
     }
 
     public AmbientLight crearLuz(ColorRGBA color) {
-        return new AmbientLight(color);
+        AmbientLight al = new AmbientLight();
+        al.setColor(color);
+        return al;
     }
 
     public Spatial crearPlano(Vector3f v) {

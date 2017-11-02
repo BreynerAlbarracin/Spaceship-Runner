@@ -1,13 +1,10 @@
 package mygame;
 
 //import com.bulletphysics.collision.shapes.CollisionShape;
-import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.light.AmbientLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -69,11 +66,12 @@ public class Main extends SimpleApplication {
     }
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Init">
     @Override
     public void simpleInitApp() {
         factory = new Factory(assetManager);
         controller = new Controller(inputManager);
-        phisycs = new Phisycs();
+        phisycs = new Phisycs(true);
 
         agregarelemento(factory.createSky());
 
@@ -89,67 +87,70 @@ public class Main extends SimpleApplication {
         crearPlanos();
         crearCubos();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Update">
     @Override
     public void simpleUpdate(float tpf) {
         //TODO: add update code
-        MoverTerreno();
-        MoverObstaculo();
-
-        camLeft = new Vector3f(1, 0, 0);
-        camLeft.y = 0;
-        walkDirection.set(0, 0, 0);
-
-        if (controller.isLeft()) {
-            walkDirection.addLocal(camLeft);
-        }
-        if (controller.isRight()) {
-            walkDirection.addLocal(camLeft.negate());
-        }
-
-        Quaternion q = new Quaternion();
-        q.fromAngles(0.1f, 0, 0);
-        cam.setLocation(new Vector3f(player.getPhysicsLocation().x, player.getPhysicsLocation().y + 2.5f, player.getPhysicsLocation().z - 6f));
-        cam.setRotation(q);
-        player.setWalkDirection(walkDirection);
-
-        if (spaceship.getLocalTranslation().z > terreno2.getLocalTranslation().z) {
-
-            terreno1.setLocalTranslation(0, -10, terreno4.getLocalTranslation().getZ() + 35);
-        }
-
-        if (spaceship.getLocalTranslation().z > terreno3.getLocalTranslation().z) {
-            terreno2.setLocalTranslation(0, -10, terreno1.getLocalTranslation().getZ() + 35);
-        }
-
-        if (spaceship.getLocalTranslation().z > terreno4.getLocalTranslation().z) {
-            terreno3.setLocalTranslation(0, -10, terreno2.getLocalTranslation().getZ() + 35);
-        }
-
-        if (spaceship.getLocalTranslation().z > terreno1.getLocalTranslation().z) {
-            terreno4.setLocalTranslation(0, -10, terreno3.getLocalTranslation().getZ() + 35);
-        }
-
-        if (spaceship.getLocalTranslation().z > Gb1.getLocalTranslation().z) {
-            Gb1.setLocalTranslation(-17 + (int) (Math.random() * ((17 + 17) + 1)), -8f, 100);
-            Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-            mat.setColor("Color", ColorRGBA.randomColor());
-            Gb1.setMaterial(mat);
-        }
-
-        if (spaceship.getLocalTranslation().z > Gb2.getLocalTranslation().z) {
-            Gb2.setLocalTranslation(-7 + (int) (Math.random() * ((7 + 7) + 1)), -8f, 100);
-            Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-            mat.setColor("Color", ColorRGBA.randomColor());
-            Gb2.setMaterial(mat);
-        }
-
-        if (Gb1.getLocalTranslation().distance(Gb2.getLocalTranslation()) <= 3) {
-            Gb1.setLocalTranslation(-17 + (int) (Math.random() * ((17 + 17) + 1)), Gb1.getLocalTranslation().y, Gb1.getLocalTranslation().z);
-            Gb2.setLocalTranslation(-7 + (int) (Math.random() * ((7 + 7) + 1)), Gb2.getLocalTranslation().y, Gb2.getLocalTranslation().z);
-        }
+//        MoverTerreno();
+//        MoverObstaculo();
+//
+//        camLeft = new Vector3f(1, 0, 0);
+//        camLeft.y = 0;
+//        walkDirection.set(0, 0, 0);
+//
+//        if (controller.isLeft()) {
+//            walkDirection.addLocal(camLeft);
+//        }
+//        if (controller.isRight()) {
+//            walkDirection.addLocal(camLeft.negate());
+//        }
+//
+//        Quaternion q = new Quaternion();
+//        q.fromAngles(0.1f, 0, 0);
+//        cam.setLocation(new Vector3f(player.getPhysicsLocation().x, player.getPhysicsLocation().y + 2.5f, player.getPhysicsLocation().z - 6f));
+//        cam.setRotation(q);
+//        player.setWalkDirection(walkDirection);
+//
+//        if (spaceship.getLocalTranslation().z > terreno2.getLocalTranslation().z) {
+//
+//            terreno1.setLocalTranslation(0, -10, terreno4.getLocalTranslation().getZ() + 35);
+//        }
+//
+//        if (spaceship.getLocalTranslation().z > terreno3.getLocalTranslation().z) {
+//            terreno2.setLocalTranslation(0, -10, terreno1.getLocalTranslation().getZ() + 35);
+//        }
+//
+//        if (spaceship.getLocalTranslation().z > terreno4.getLocalTranslation().z) {
+//            terreno3.setLocalTranslation(0, -10, terreno2.getLocalTranslation().getZ() + 35);
+//        }
+//
+//        if (spaceship.getLocalTranslation().z > terreno1.getLocalTranslation().z) {
+//            terreno4.setLocalTranslation(0, -10, terreno3.getLocalTranslation().getZ() + 35);
+//        }
+//
+//        if (spaceship.getLocalTranslation().z > Gb1.getLocalTranslation().z) {
+//            Gb1.setLocalTranslation(-17 + (int) (Math.random() * ((17 + 17) + 1)), -8f, 100);
+//            Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+//            mat.setColor("Color", ColorRGBA.randomColor());
+//            Gb1.setMaterial(mat);
+//        }
+//
+//        if (spaceship.getLocalTranslation().z > Gb2.getLocalTranslation().z) {
+//            Gb2.setLocalTranslation(-7 + (int) (Math.random() * ((7 + 7) + 1)), -8f, 100);
+//            Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+//            mat.setColor("Color", ColorRGBA.randomColor());
+//            Gb2.setMaterial(mat);
+//        }
+//
+//        if (Gb1.getLocalTranslation().distance(Gb2.getLocalTranslation()) <= 3) {
+//            Gb1.setLocalTranslation(-17 + (int) (Math.random() * ((17 + 17) + 1)), Gb1.getLocalTranslation().y, Gb1.getLocalTranslation().z);
+//            Gb2.setLocalTranslation(-7 + (int) (Math.random() * ((7 + 7) + 1)), Gb2.getLocalTranslation().y, Gb2.getLocalTranslation().z);
+//        }
 
     }
+    //</editor-fold>
 
     @Override
     public void simpleRender(RenderManager rm) {
@@ -174,19 +175,19 @@ public class Main extends SimpleApplication {
             new Vector3f(0f, -10f, 70),
             new Vector3f(0f, -10f, 105)};
 
-        terreno1 = factory.crearPlano(posiciones[1]);
+        terreno1 = factory.crearPlano(posiciones[0]);
         phisycs.volverRigido(terreno1, 0f);
         agregarelemento(terreno1);
 
-        terreno2 = factory.crearPlano(posiciones[2]);
+        terreno2 = factory.crearPlano(posiciones[1]);
         phisycs.volverRigido(terreno2, 0f);
         agregarelemento(terreno2);
 
-        terreno3 = factory.crearPlano(posiciones[3]);
+        terreno3 = factory.crearPlano(posiciones[2]);
         phisycs.volverRigido(terreno3, 0f);
         agregarelemento(terreno3);
 
-        terreno4 = factory.crearPlano(posiciones[4]);
+        terreno4 = factory.crearPlano(posiciones[3]);
         phisycs.volverRigido(terreno4, 0f);
         agregarelemento(terreno4);
     }
@@ -206,7 +207,7 @@ public class Main extends SimpleApplication {
     private void crearPlayer() {
         Player jugador = new Player();
         jugador.agregarSpatial(obtenerSpatial("nave"));
-        phisycs.agregarElemento(jugador);
+        phisycs.agregarElemento(jugador.getPlayer());
 
         player = jugador.getPlayer();
     }
