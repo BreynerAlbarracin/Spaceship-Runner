@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mygame;
+package Modelo;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.light.AmbientLight;
@@ -55,16 +55,19 @@ public class Factory {
         return al;
     }
 
-    public Spatial crearPlano(Vector3f v) {
-        Spatial plano = assetManager.loadModel("Models/plano/plano.j3o");
-        plano.setLocalTranslation(v);
-        plano.setLocalScale(2f);
-        return plano;
+    public Geometry crearPlano(Vector3f v) {
+        Box b = new Box(18, 0.1f, 20);
+        Geometry g = new Geometry("Piso", b);
+        g.setLocalTranslation(v);
+        Material m = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        m.setTexture("ColorMap", assetManager.loadTexture("Models/plano/tubeTexture.png"));
+        g.setMaterial(m);
+        return g;
     }
 
     public Geometry crearObjeto(Vector3f v, ColorRGBA color) {
         Box b = new Box(2, 2, 2);
-        Geometry geometry = new Geometry("Box", b);
+        Geometry geometry = new Geometry("Enemigo", b);
         geometry.setLocalTranslation(v);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", color);
