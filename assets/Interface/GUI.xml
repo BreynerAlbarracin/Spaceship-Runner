@@ -2,38 +2,44 @@
 <nifty xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
     <useControls filename="nifty-default-controls.xml"/>
     <useStyles filename="nifty-default-styles.xml"/>
-    <screen controller="mygame.Main" id="GScreen0">
+    <screen controller="Modelo.Main" id="GScreen0">
         <layer id="GLayer0" childLayout="absolute">
-            <image id="GImage0" childLayout="absolute"filename="Interface/img/bg.png" width="800px" x="0px" y="0px" height="500px">
+            <image id="GImage0" childLayout="absolute"filename="Interface/img/bg.png" width="800px" x="0px" y="0px" height="600px">
                 <control name="button" id="GButton3" childLayout="center" x="324" width="160px" y="200" label="Iniciar" height="50px"/>
-                <control name="button" id="GButton1" childLayout="center" x="324" width="160px" y="270" label="Ayuda" height="50px"/>
-                <control name="button" id="GButton2" childLayout="center" x="324" width="160px" y="340" label="Salir" height="50px"/>
+                <control name="button" id="GButton1" childLayout="center" x="324" width="160px" y="310" label="Ayuda" height="50px"/>
+                <control name="button" id="GButton2" childLayout="center" x="324" width="160px" y="420" label="Salir" height="50px"/>
                 <image id="GImage3" filename="Interface/img/logo.png" width="500px" x="150px" y="-15px" height="200px"/>
             </image>
         </layer>
     </screen>
-    <screen controller="mygame.Main" id="GScreen1">
+    <screen controller="Modelo.Main" id="GScreen1">
         <layer id="GLayer1" childLayout="absolute">
             <panel id="GPanel0" childLayout="absolute" width="750px" x="1" y="1" height="500px"/>
             <image id="GImage6" filename="Interface/img/hbFull.png" width="238px" x="1" y="-19" height="71px"/>
         </layer>
     </screen>
-    <screen controller="mygame.Main" id="GScreen2">
+    <screen controller="Modelo.Main" id="GScreen2">
         <layer id="GLayer2" childLayout="absolute">
             <panel id="GPanel1" childLayout="absolute" width="750px" x="1" y="1" height="500px"/>
             <image id="GImage7" filename="Interface/img/hbMed.png" width="238px" x="1px" y="-19" height="71px"/>
         </layer>
     </screen>
-    <screen controller="mygame.Main" id="GScreen3">
+    <screen controller="Modelo.Main" id="GScreen3">
         <layer id="GLayer3" childLayout="absolute">
             <panel id="GPanel2" childLayout="absolute" width="750px" x="1px" y="1px" height="500px"/>
             <image id="GImage8" filename="Interface/img/hbLow.png" width="238px" x="1px" y="-19" height="71px"/>
         </layer>
     </screen>
-    <screen controller="mygame.Main" id="GScreen4">
+    <screen controller="Modelo.Main" id="GScreen4">
         <layer id="GLayer4" childLayout="absolute">
             <panel id="GPanel3" childLayout="absolute" width="750px" x="1" y="1" height="500px"/>
             <image id="GImage9" filename="Interface/img/hbEmpty.png" width="238px" x="1px" y="-19" height="71px"/>
+        </layer>
+    </screen>
+        <screen controller="Modelo.Main" id="GScreen5">
+        <layer id="GLayer5" childLayout="absolute">
+            <image id="GImage5" childLayout="absolute"filename="Interface/img/perdiste.png" width="500px" x="150px" y="0px" height="200px"></image>
+                <control name="button" id="GButton4" childLayout="center" x="324" width="200px" y="310" label="Presiona enter dos veces" height="90px"/>   
         </layer>
     </screen>
 </nifty>

@@ -42,7 +42,6 @@ public class Factory {
     public Spatial cargarSpaceShip() {
         Spatial spaceship = assetManager.loadModel("Models/lpSpaceShip/lpSpaceShip.j3o");
         spaceship.setName("nave");
-
         spaceship.setLocalTranslation(0f, -9f, 0f);
         spaceship.setLocalScale(1);
 
