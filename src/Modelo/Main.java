@@ -55,11 +55,18 @@ public class Main extends SimpleApplication implements ScreenController {
         app.setShowSettings(false);
         AppSettings settings = new AppSettings(true);
         settings.setResolution(800, 600);
+        settings.setFrameRate(1000);
         app.setSettings(settings);
         app.start();
     }
     //</editor-fold>
-
+    
+/**
+* Inicializa un conjunto de variabes y/o metodos una vez.
+* @param void
+* @return void. no devuelve nada puesto que su proposito es iniciar variables y/o
+* metodos una vez.
+*/
     //<editor-fold defaultstate="collapsed" desc="Init">
     @Override
     public void simpleInitApp() {
@@ -85,16 +92,15 @@ public class Main extends SimpleApplication implements ScreenController {
     }
     //</editor-fold>
 
+/**
+* Inicializa un conjunto de variabes y/o metodos constantemente.
+* @param tpf, numero flotante basado en los Frames per second de la maquina.
+* @return void. no devuelve nada puesto que su proposito es iniciar variables y/o
+* metodos constantemente.
+*/
     //<editor-fold defaultstate="collapsed" desc="Update">
     @Override
     public void simpleUpdate(float tpf) {
-        /**
-         * Corregir forma del movimiento del terreno y del personaje El
-         * personaje puede ser enviado a la cordenada 0,0,0 cuando llegue a un
-         * punto Al ser un terreno infinito el jugador no se percatara de lo
-         * ocurrido El terreno pueden ser solo dos planos muuy largos, no
-         * necesariamente 4
-         */
         long currentTime = System.currentTimeMillis();
 
         if (currentTime - sysTime > 1000) {
@@ -132,6 +138,13 @@ public class Main extends SimpleApplication implements ScreenController {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Mover escenario">
+    
+/**
+* Mueve una serie de terrenos tomando la misma posicion en X, Y
+* y se le resta a la posicion asignada en Z un valor flotante speed
+* @param speed velocidad con la que se quiere se mueva el terreno
+* @return void. no devuelve nada puesto que su proposito es mover terrenos
+*/
     private void MoverTerreno(float speed) {
         terreno1.setLocalTranslation(terreno1.getLocalTranslation().x, terreno1.getLocalTranslation().y, terreno1.getLocalTranslation().z - speed);
         terreno2.setLocalTranslation(terreno2.getLocalTranslation().x, terreno2.getLocalTranslation().y, terreno2.getLocalTranslation().z - speed);
@@ -139,6 +152,12 @@ public class Main extends SimpleApplication implements ScreenController {
         terreno4.setLocalTranslation(terreno4.getLocalTranslation().x, terreno4.getLocalTranslation().y, terreno4.getLocalTranslation().z - speed);
     }
 
+/**
+* Mueve una serie de obstaculos tomando la misma posicion en X, Y
+* y se le resta a la posicion asignada en Z un valor flotante speed
+* @param speed velocidad con la que se quiere se mueva el terreno
+* @return void. no devuelve nada puesto que su proposito es mover obstaculos.
+*/
     private void MoverObstaculo(float speed) {
         Gb1.setLocalTranslation(Gb1.getLocalTranslation().x, Gb1.getLocalTranslation().y, Gb1.getLocalTranslation().z - speed);
         Gb1.getControl(RigidBodyControl.class).setPhysicsLocation(new Vector3f(Gb1.getLocalTranslation().x, Gb1.getLocalTranslation().y, Gb1.getLocalTranslation().z - speed));
@@ -147,13 +166,26 @@ public class Main extends SimpleApplication implements ScreenController {
         Gb2.getControl(RigidBodyControl.class).setPhysicsLocation(new Vector3f(Gb2.getLocalTranslation().x, Gb2.getLocalTranslation().y, Gb2.getLocalTranslation().z - speed));
     }
 
+/**
+* Configura una camara dandole un angulo a partir de un quaternion y posteriormente
+* se da la posicion de la camara por detras del personaje.
+* @param void.
+* @return void. no devuelve nada puesto que su proposito es mover la camara y dar un angulo a esta
+*/
     private void ConfigurarCamara() {
         Quaternion q = new Quaternion();
         q.fromAngles(0.1f, 0, 0);
         cam.setLocation(new Vector3f(player.getPhysicsLocation().x, player.getPhysicsLocation().y + 2.5f, player.getPhysicsLocation().z - 6f));
         cam.setRotation(q);
     }
-
+    
+/**
+* Mueve una serie de terrenos tomando la misma posicion en X, Y
+* y se le agrega a la posicion asignada en Z un valor equivalente al largo del terreno
+* de esta manera cada vez que el jugador pase por un terreno cambian las posiciones de estos
+* @param void 
+* @return void. no devuelve nada puesto que su proposito es mover terrenos
+*/
     private void TransladarTerreno() {
         if (player.getPhysicsLocation().z > terreno2.getLocalTranslation().z) {
             terreno1.setLocalTranslation(0, -10, terreno4.getLocalTranslation().getZ() + 35);
@@ -172,6 +204,13 @@ public class Main extends SimpleApplication implements ScreenController {
         }
     }
 
+/**
+* mueve al personaje mediante un vector basado en un flotante velocidad, el cual permite
+* al jugador moverse de derecha a izquierda y además agrega un limite para la libertad
+* de movimiento del personaje
+* @param speed velocidad con la que se quiere se mueva el personaje en x
+* @return void. no devuelve nada puesto que su proposito es mover al personaje
+*/
     private void MoverPersonaje(float speed) {
         camLeft = new Vector3f(speed, 0, 0);
         walkDirection.set(0, 0, 0);
@@ -189,6 +228,12 @@ public class Main extends SimpleApplication implements ScreenController {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Colisiones">
+/**
+* Detecta las colisiones entre un rayo y los dos obstaculos, a partir de las
+* colisiones mueve aleatoriamente el obstaculo
+* @param void 
+* @return void. no devuelve nada puesto que su proposito es detectar colisiones
+*/
     private void detectarColision() {
         Ray ray = new Ray(cam.getLocation(), cam.getDirection());
         CollisionResults cs = new CollisionResults();
@@ -213,6 +258,12 @@ public class Main extends SimpleApplication implements ScreenController {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Crear Objetos">
+/**
+* a partir de un arreglo unidimesional de vectores3f  se asigna las posiciones
+* iniciales a los terrenos
+* @param void velocidad con la que se quiere se mueva el terreno
+* @return void. no devuelve nada puesto que su proposito es asignar posiciones
+*/
     private void crearPlanos() {
         Vector3f[] posiciones = {new Vector3f(0f, -10f, 0),
             new Vector3f(0f, -10f, 35),
@@ -236,6 +287,12 @@ public class Main extends SimpleApplication implements ScreenController {
         agregarelemento(terreno4);
     }
 
+/**
+* mediante el uso de la clase factory se crean cubos en una posicion por defecto
+* y se le agrega un color aleatorio
+* @param void
+* @return void. no devuelve nada puesto que su proposito es crear cubos
+*/
     private void crearCubos() {
         Gb1 = factory.crearObjeto(new Vector3f(0, -8f, 100), ColorRGBA.randomColor());
         phisycs.volverRigido(Gb1, 0f);
@@ -246,6 +303,12 @@ public class Main extends SimpleApplication implements ScreenController {
         agregarelemento(Gb2);
     }
 
+/**
+* a partir de la clase player se crea un nuevo player y se le asigna el modelo
+* a controlar, despues, se le da una vida a este.
+* @param void
+* @return void. no devuelve nada puesto que su proposito es crear al player
+*/
     private void crearPlayer() {
         jugador = new Player();
         jugador.agregarSpatial(obtenerSpatial("nave"));
@@ -256,14 +319,30 @@ public class Main extends SimpleApplication implements ScreenController {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Metodos del entorno">
+    
+/**
+* agrega un elemento al rootnode
+* @param n,elemento tipo spatial a agregar
+* @return void. no devuelve nada puesto que su proposito es agregar elementos al rootnode
+*/
     private void agregarelemento(Spatial n) {
         rootNode.attachChild(n);
     }
 
+/**
+* agrega un elemento al rootnode
+* @param am,elemento tipo AmbientLight a agregar
+* @return void. no devuelve nada puesto que su proposito es agregar luz al rootnode
+*/
     private void agregarLuz(AmbientLight am) {
         rootNode.addLight(am);
     }
 
+/**
+* obtiene un spatial que se encuentra en el rootnode
+* @param name, elemento tipo spatial a buscar
+* @return Spatial, retorna un spatial que se encuentra en el rootnode.
+*/    
     private Spatial obtenerSpatial(String name) {
         return rootNode.getChild(name);
     }
@@ -275,6 +354,11 @@ public class Main extends SimpleApplication implements ScreenController {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Interfaz">
+/**
+* inicializa la interfaz en la primera screen
+* @param void
+* @return void. no devuelve nada puesto que su proposito es inicializar la interface
+*/
     private void setGUI() {
         flyCam.setEnabled(false);
         NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, viewPort);
@@ -284,6 +368,12 @@ public class Main extends SimpleApplication implements ScreenController {
         speed = 0;
     }
 
+/**
+* Analiza el screen en el que se encuentra el usuario y a partir de esto se hace
+* un analisis de la vida del jugador para pasar al siguiente screen.
+* @param void
+* @return void. no devuelve nada puesto que su proposito es cambiar screens
+*/    
     private void lifeUI() {
         if (jugador.getVida() == 3) {
             nifty.gotoScreen("GScreen2");
@@ -312,6 +402,16 @@ public class Main extends SimpleApplication implements ScreenController {
         System.exit(0);
     }
 
+    @NiftyEventSubscriber(id = "GButton1")
+    public void help(final String id, final ButtonClickedEvent event) {
+        nifty.gotoScreen("GScreen6");
+    }
+    
+        @NiftyEventSubscriber(id = "GButtonok")
+    public void entendido(final String id, final ButtonClickedEvent event) {
+        nifty.gotoScreen("GScreen0");
+    }
+
     @NiftyEventSubscriber(id = "GButton4")
     public void Reiniciar(final String id, final ButtonClickedEvent event) {
         nifty.gotoScreen("GScreen0");
@@ -324,7 +424,6 @@ public class Main extends SimpleApplication implements ScreenController {
     }
 
     //</editor-fold>
-    
     //<editor-fold defaultstate="collapsed" desc="Metodos Abstractos">
     @Override
     public void bind(Nifty nifty, Screen screen) {

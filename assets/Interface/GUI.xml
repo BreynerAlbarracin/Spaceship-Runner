@@ -42,4 +42,12 @@
                 <control name="button" id="GButton4" childLayout="center" x="324" width="200px" y="310" label="Presiona enter dos veces" height="90px"/>   
         </layer>
     </screen>
+        
+        <screen controller="Modelo.Main" id="GScreen6">
+        <layer id="GLayer6" childLayout="absolute">
+            <image id="GImage0" childLayout="absolute"filename="Interface/img/bg.png" width="800px" x="0px" y="0px" height="600px"></image>
+            <image id="GImage0" childLayout="absolute"filename="Interface/img/help.png" width="400px" x="225px" y="100px" height="200px"></image>
+                <control name="button" id="GButtonok" childLayout="center" x="324" width="200px" y="310" label="Entendido" height="90px"/>   
+        </layer>
+    </screen>
 </nifty>
